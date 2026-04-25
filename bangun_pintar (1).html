@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bangun Pintar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --hijau: #2ECC71;
+      --hijau-tua: #1a9a50;
+      --hijau-muda: #d4f5e2;
+      --biru: #3498DB;
+      --biru-tua: #1a6fa8;
+      --biru-muda: #d6ecf9;
+      --kuning: #F1C40F;
+      --kuning-tua: #c79d0a;
+      --kuning-muda: #fdf6d0;
+      --oranye: #E67E22;
+      --oranye-muda: #fde8d0;
+      --ungu: #9B59B6;
+      --ungu-muda: #ead6f5;
+      --merah: #E74C3C;
+      --merah-muda: #fde0de;
+      --abu: #ECF0F1;
+      --abu-tua: #95A5A6;
+      --putih: #FFFFFF;
+      --gelap: #2C3E50;
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #f0faf5;
+      color: var(--gelap);
+      min-height: 100vh;
+    }
+
+    .page { display: none; min-height: 100vh; }
+    .page.active { display: block; }
+
+    /* ===== LOGIN ===== */
+    #login {
+      background: linear-gradient(135deg, #1a9a50 0%, #2ECC71 50%, #3498DB 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-box {
+      background: white;
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+
+    .login-logo { font-size: 4rem; margin-bottom: 0.5rem; }
+    .login-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--hijau-tua);
+      margin-bottom: 0.25rem;
+    }
+    .login-sub { color: var(--abu-tua); font-size: 0.9rem; margin-bottom: 2rem; }
+
+    .login-input {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      border: 2px solid #e0e0e0;
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      font-family: 'Nunito', sans-serif;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .login-input:focus { border-color: var(--hijau); }
+
+    .btn-masuk {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--hijau), var(--biru));
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 1.1rem;
+      font-weight: 700;
+      font-family: 'Nunito', sans-serif;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-masuk:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(46,204,113,0.4);
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      background: white;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--hijau-tua);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+
+    .nav-user {
+      background: var(--hijau-muda);
+      color: var(--hijau-tua);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    /* ===== BERANDA ===== */
+    #beranda { background: #f0faf5; }
+
+    .hero {
+      background: linear-gradient(135deg, #1a9a50 0%, #2ECC71 60%, #52d9f0 100%);
+      padding: 3rem 2rem;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50px; right: -50px;
+      width: 200px; height: 200px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -30px; left: -30px;
+      width: 150px; height: 150px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+    }
+
+    .hero-greeting { font-size: 1.2rem; opacity: 0.9; margin-bottom: 0.5rem; }
+    .hero-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .hero-desc {
+      font-size: 1rem;
+      opacity: 0.92;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .tujuan-section { padding: 2rem; }
+    .section-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--hijau-tua);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .tujuan-list {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .tujuan-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.5rem 0;
+      font-size: 0.95rem;
+      color: #444;
+    }
+
+    .tujuan-icon {
+      background: var(--hijau-muda);
+      color: var(--hijau-tua);
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .topik-section { padding: 0 2rem 2rem; }
+
+    .topik-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+
+    .topik-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.5rem 1rem;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 2px solid transparent;
+    }
+    .topik-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+    .topik-card.persegi { border-color: var(--biru); }
+    .topik-card.persegipanjang { border-color: var(--oranye); }
+    .topik-card.segitiga { border-color: var(--ungu); }
+
+    .shape-anim {
+      margin: 0.5rem auto 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .topik-nama { font-weight: 800; font-size: 1rem; margin-bottom: 0.25rem; }
+    .topik-sub { font-size: 0.8rem; color: var(--abu-tua); margin-bottom: 1rem; }
+
+    .btn-mulai {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 20px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+    .btn-mulai:hover { transform: scale(1.05); }
+    .btn-mulai.biru { background: var(--biru); color: white; }
+    .btn-mulai.oranye { background: var(--oranye); color: white; }
+    .btn-mulai.ungu { background: var(--ungu); color: white; }
+
+    /* Animasi SVG bangun datar */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+    .sq   { animation: float 3s ease-in-out infinite; }
+    .rect { animation: float 3s ease-in-out infinite 0.5s; }
+    .tri  { animation: float 3s ease-in-out infinite 1s; }
+
+    /* ===== MATERI ===== */
+    #materi { background: #f0faf5; }
+
+    .materi-hero {
+      padding: 2rem;
+      text-align: center;
+      border-radius: 0 0 30px 30px;
+    }
+    .materi-hero.biru-bg   { background: linear-gradient(135deg, var(--biru-tua), var(--biru)); }
+    .materi-hero.oranye-bg { background: linear-gradient(135deg, #c05c10, var(--oranye)); }
+    .materi-hero.ungu-bg   { background: linear-gradient(135deg, #6c3483, var(--ungu)); }
+
+    .materi-hero h1 {
+      font-family: 'Baloo 2', cursive;
+      font-size: 2rem;
+      color: white;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+    .materi-hero p { color: rgba(255,255,255,0.9); font-size: 0.95rem; }
+
+    .materi-content { padding: 1.5rem; }
+
+    .materi-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      margin-bottom: 1.2rem;
+    }
+    .materi-card h3 {
+      font-weight: 800;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .formula-box {
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.2rem;
+      font-size: 1rem;
+      border-left: 4px solid;
+      margin-bottom: 0.8rem;
+    }
+    .formula-box.biru   { border-color: var(--biru);   background: var(--biru-muda); }
+    .formula-box.oranye { border-color: var(--oranye); background: var(--oranye-muda); }
+    .formula-box.ungu   { border-color: var(--ungu);   background: var(--ungu-muda); }
+
+    .contoh-benda { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.8rem; }
+    .benda-tag {
+      background: var(--hijau-muda);
+      color: var(--hijau-tua);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .fakta-box {
+      background: linear-gradient(135deg, #fff9e6, #fffbe8);
+      border: 2px dashed var(--kuning-tua);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.2rem;
+    }
+    .fakta-item {
+      display: flex;
+      gap: 0.6rem;
+      align-items: flex-start;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    /* Kalkulator */
+    .kalk-input-group { margin-bottom: 1rem; }
+    .kalk-input-group label {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+    .kalk-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      font-family: 'Nunito', sans-serif;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .kalk-input:focus { border-color: var(--hijau); }
+
+    .kalk-hasil {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .hasil-box {
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      text-align: center;
+    }
+    .hasil-box.luas     { background: var(--hijau-muda); border: 2px solid var(--hijau); }
+    .hasil-box.keliling { background: var(--biru-muda);  border: 2px solid var(--biru); }
+
+    .hasil-label { font-size: 0.8rem; font-weight: 700; color: #555; margin-bottom: 0.4rem; }
+    .hasil-nilai { font-size: 1.6rem; font-weight: 900; }
+    .hasil-box.luas .hasil-nilai     { color: var(--hijau-tua); }
+    .hasil-box.keliling .hasil-nilai { color: var(--biru-tua); }
+    .hasil-satuan { font-size: 0.8rem; color: #777; }
+
+    /* Navigasi bawah halaman materi */
+    .nav-actions { display: flex; gap: 1rem; padding: 0 1.5rem 2rem; }
+    .btn-action {
+      flex: 1;
+      padding: 1rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-action:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.15); }
+    .btn-action.kembali { background: var(--abu); color: var(--gelap); }
+    .btn-action.quiz    { background: linear-gradient(135deg, var(--kuning-tua), var(--oranye)); color: white; }
+
+    /* ===== QUIZ ===== */
+    #quiz { background: #f0faf5; }
+
+    .quiz-header {
+      background: linear-gradient(135deg, #16a085, #2ECC71);
+      padding: 1.5rem 2rem;
+      color: white;
+    }
+    .quiz-header h2 {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+
+    .quiz-progress {
+      background: rgba(255,255,255,0.3);
+      border-radius: 10px;
+      height: 8px;
+      margin-top: 0.8rem;
+      overflow: hidden;
+    }
+    .quiz-progress-fill {
+      background: white;
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.4s;
+    }
+
+    .quiz-content { padding: 1.5rem; }
+
+    .soal-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      margin-bottom: 1.2rem;
+    }
+
+    .soal-nomor { font-size: 0.85rem; color: var(--abu-tua); font-weight: 700; margin-bottom: 0.5rem; }
+    .soal-text  { font-size: 1rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.2rem; }
+
+    .pilihan-btn {
+      width: 100%;
+      text-align: left;
+      padding: 0.8rem 1rem;
+      margin-bottom: 0.6rem;
+      border: 2px solid #e0e0e0;
+      border-radius: var(--radius-sm);
+      background: white;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: border 0.2s, background 0.2s;
+      font-weight: 600;
+    }
+    .pilihan-btn:hover    { border-color: var(--hijau); background: var(--hijau-muda); }
+    .pilihan-btn.benar    { border-color: var(--hijau); background: var(--hijau-muda); color: var(--hijau-tua); }
+    .pilihan-btn.salah    { border-color: var(--merah);  background: var(--merah-muda);  color: var(--merah); }
+    .pilihan-btn.disabled { cursor: not-allowed; }
+
+    .pembahasan {
+      background: #f0faf5;
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      border-left: 4px solid var(--hijau);
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* Skor */
+    .skor-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      margin: 1.5rem;
+    }
+    .skor-emoji  { font-size: 4rem; margin-bottom: 1rem; }
+    .skor-angka  { font-family: 'Baloo 2', cursive; font-size: 4rem; font-weight: 800; }
+    .skor-angka.bagus  { color: var(--hijau); }
+    .skor-angka.cukup  { color: var(--kuning-tua); }
+    .skor-angka.kurang { color: var(--merah); }
+
+    .selamat-banner {
+      background: linear-gradient(135deg, var(--hijau), #2980b9);
+      color: white;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin: 0 1.5rem 1rem;
+      text-align: center;
+    }
+    .selamat-banner h3 {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.3rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .skor-nav { display: flex; gap: 1rem; padding: 0 1.5rem 2rem; }
+    .btn-skor {
+      flex: 1;
+      padding: 1rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+    .btn-skor:hover { transform: translateY(-2px); }
+    .btn-skor.beranda { background: var(--abu); color: var(--gelap); }
+    .btn-skor.lanjut  { background: linear-gradient(135deg, var(--hijau), var(--biru)); color: white; }
+
+    /* Tombol next soal */
+    .btn-next-soal {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--hijau), var(--biru));
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s;
+      margin-bottom: 1rem;
+    }
+    .btn-next-soal:hover { transform: translateY(-2px); }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .topik-grid    { grid-template-columns: 1fr; }
+      .kalk-hasil    { grid-template-columns: 1fr; }
+      .nav-actions   { flex-direction: column; }
+      .skor-nav      { flex-direction: column; }
+      .hero-title    { font-size: 1.6rem; }
+      .topik-card    { padding: 1.2rem 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ==================== HALAMAN LOGIN ==================== -->
+<div id="login" class="page active" style="display:flex;">
+  <div class="login-box">
+    <div class="login-logo">📐</div>
+    <div class="login-title">Bangun Pintar</div>
+    <div class="login-sub">Belajar Keliling &amp; Luas Bangun Datar dengan Seru!</div>
+    <div style="text-align:left; margin-bottom:0.4rem;">
+      <label style="font-weight:700; font-size:0.9rem; color:#555;">
+        Siapa namamu? 👋
+      </label>
+    </div>
+    <input
+      class="login-input"
+      id="nama-input"
+      type="text"
+      placeholder="Tulis namamu di sini..."
+      maxlength="30"
+    >
+    <div id="login-error" style="color:var(--merah); font-size:0.85rem; margin-top:0.5rem; display:none;">
+      Nama tidak boleh kosong ya!
+    </div>
+    <button class="btn-masuk" onclick="handleLogin()">Ayo Mulai Belajar! 🚀</button>
+    <div style="margin-top:1.5rem; display:flex; justify-content:center; gap:1rem; font-size:1.5rem;">
+      <span title="Persegi">🟦</span>
+      <span title="Persegi Panjang">🔷</span>
+      <span title="Segitiga">🔺</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== HALAMAN BERANDA ==================== -->
+<div id="beranda" class="page">
+  <nav class="navbar">
+    <div class="nav-brand" onclick="showPage('beranda')">📐 Bangun Pintar</div>
+    <div class="nav-user" id="nav-user-name">Hallo, Siswa!</div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-greeting">✨ Hallo, <span id="hero-nama">Siswa</span>! ✨</div>
+    <div class="hero-title">Selamat Datang di Bangun Pintar</div>
+    <div class="hero-desc">
+      Jelajahi dunia bangun datar — pelajari rumus, hitung, dan uji kemampuanmu dengan cara yang menyenangkan!
+    </div>
+  </div>
+
+  <div class="tujuan-section">
+    <div class="section-title">🎯 Tujuan Belajar</div>
+    <div class="tujuan-list">
+      <div class="tujuan-item">
+        <div class="tujuan-icon">1</div>
+        Memahami konsep keliling dan luas bangun datar
+      </div>
+      <div class="tujuan-item">
+        <div class="tujuan-icon">2</div>
+        Menghafal rumus Persegi, Persegi Panjang, dan Segitiga
+      </div>
+      <div class="tujuan-item">
+        <div class="tujuan-icon">3</div>
+        Menghitung keliling dan luas dari berbagai ukuran
+      </div>
+      <div class="tujuan-item">
+        <div class="tujuan-icon">4</div>
+        Menerapkan konsep dalam kehidupan sehari-hari
+      </div>
+    </div>
+  </div>
+
+  <div class="topik-section">
+    <div class="section-title">📚 Pilih Topik</div>
+    <div class="topik-grid">
+
+      <!-- Kartu Persegi -->
+      <div class="topik-card persegi">
+        <div class="shape-anim">
+          <svg width="70" height="70" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+            <rect class="sq" x="10" y="10" width="50" height="50" rx="4" fill="#3498DB" opacity="0.85"/>
+            <text x="35" y="40" text-anchor="middle" font-size="11" fill="white" font-weight="bold" font-family="Nunito,sans-serif">s×s</text>
+          </svg>
+        </div>
+        <div class="topik-nama" style="color:var(--biru-tua)">Persegi</div>
+        <div class="topik-sub">Semua sisi sama panjang</div>
+        <button class="btn-mulai biru" onclick="showMateri('persegi')">Mulai Belajar →</button>
+      </div>
+
+      <!-- Kartu Persegi Panjang -->
+      <div class="topik-card persegipanjang">
+        <div class="shape-anim">
+          <svg width="70" height="70" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+            <rect class="rect" x="5" y="18" width="60" height="34" rx="4" fill="#E67E22" opacity="0.85"/>
+            <text x="35" y="38" text-anchor="middle" font-size="11" fill="white" font-weight="bold" font-family="Nunito,sans-serif">p×l</text>
+          </svg>
+        </div>
+        <div class="topik-nama" style="color:var(--oranye)">Persegi Panjang</div>
+        <div class="topik-sub">Dua pasang sisi sejajar</div>
+        <button class="btn-mulai oranye" onclick="showMateri('persegipanjang')">Mulai Belajar →</button>
+      </div>
+
+      <!-- Kartu Segitiga -->
+      <div class="topik-card segitiga">
+        <div class="shape-anim">
+          <svg width="70" height="70" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+            <polygon class="tri" points="35,8 65,62 5,62" fill="#9B59B6" opacity="0.85"/>
+            <text x="35" y="52" text-anchor="middle" font-size="11" fill="white" font-weight="bold" font-family="Nunito,sans-serif">½a×t</text>
+          </svg>
+        </div>
+        <div class="topik-nama" style="color:var(--ungu)">Segitiga</div>
+        <div class="topik-sub">Tiga sisi dan tiga sudut</div>
+        <button class="btn-mulai ungu" onclick="showMateri('segitiga')">Mulai Belajar →</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==================== HALAMAN MATERI ==================== -->
+<div id="materi" class="page">
+  <nav class="navbar">
+    <div class="nav-brand" onclick="showPage('beranda')">📐 Bangun Pintar</div>
+    <div class="nav-user" id="nav-user-name2"></div>
+  </nav>
+  <div id="materi-hero" class="materi-hero biru-bg">
+    <div style="font-size:3.5rem; margin-bottom:0.5rem;" id="materi-icon">🔷</div>
+    <h1 id="materi-judul">Persegi</h1>
+    <p id="materi-sub">Bangun datar dengan empat sisi yang sama panjang</p>
+  </div>
+  <div class="materi-content" id="materi-body"></div>
+</div>
+
+<!-- ==================== HALAMAN QUIZ ==================== -->
+<div id="quiz" class="page">
+  <nav class="navbar">
+    <div class="nav-brand" onclick="showPage('beranda')">📐 Bangun Pintar</div>
+    <div class="nav-user" id="nav-user-name3"></div>
+  </nav>
+
+  <div class="quiz-header">
+    <h2 id="quiz-topik-title">Latihan Soal — Persegi</h2>
+    <div style="font-size:0.9rem; opacity:0.9; margin-top:0.3rem;" id="quiz-progress-text">Soal 1 dari 5</div>
+    <div class="quiz-progress">
+      <div class="quiz-progress-fill" id="quiz-bar" style="width:20%"></div>
+    </div>
+  </div>
+
+  <div id="quiz-soal-container" class="quiz-content"></div>
+
+  <div id="quiz-skor-container" style="display:none;">
+    <div class="skor-card">
+      <div class="skor-emoji" id="skor-emoji">🏆</div>
+      <div style="font-size:1rem; color:#555; margin-bottom:0.5rem;">Skormu</div>
+      <div class="skor-angka" id="skor-angka">80%</div>
+      <div style="font-size:0.9rem; color:#777; margin-top:0.3rem;" id="skor-detail">4 dari 5 jawaban benar</div>
+    </div>
+    <div class="selamat-banner" id="selamat-banner" style="display:none;">
+      <div style="font-size:2rem; margin-bottom:0.5rem;">🎉</div>
+      <h3>Selamat! Kamu telah menyelesaikan materi ini dengan baik!</h3>
+      <p style="font-size:0.9rem; opacity:0.9; margin-top:0.4rem;">Terus semangat belajar ya! Kamu luar biasa! ⭐</p>
+    </div>
+    <div class="skor-nav">
+      <button class="btn-skor beranda" onclick="showPage('beranda')">🏠 Beranda</button>
+      <button class="btn-skor lanjut" id="btn-lanjut-topik">Topik Selanjutnya →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+  /* ---- Data global ---- */
+  var userName     = '';
+  var currentTopik = 'persegi';
+  var currentSoal  = 0;
+  var skorQuiz     = 0;
+  var sudahJawab   = false;
+
+  var topikOrder = ['persegi', 'persegipanjang', 'segitiga'];
+
+  /* ---- Data materi & soal ---- */
+  var materiData = {
+
+    persegi: {
+      icon  : '🟦',
+      warna : 'biru-bg',
+      judul : 'Persegi',
+      sub   : 'Bangun datar dengan empat sisi yang sama panjang',
+      warnaClass: 'biru',
+      warnaCSS  : 'var(--biru-tua)',
+      svg   : '<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">'
+            + '<rect x="15" y="15" width="90" height="90" rx="6" fill="#3498DB" opacity="0.15" stroke="#3498DB" stroke-width="3"/>'
+            + '<text x="60" y="55" text-anchor="middle" font-size="13" fill="#1a6fa8" font-weight="bold" font-family="Nunito,sans-serif">s</text>'
+            + '<text x="60" y="75" text-anchor="middle" font-size="11" fill="#555" font-family="Nunito,sans-serif">s = sisi</text>'
+            + '<line x1="15" y1="8" x2="105" y2="8" stroke="#3498DB" stroke-width="2"/>'
+            + '<text x="60" y="7" text-anchor="middle" font-size="10" fill="#3498DB" font-family="Nunito,sans-serif" dominant-baseline="hanging">s</text>'
+            + '</svg>',
+      rumus : [
+        { label: '📐 Luas',     formula: 'L = s × s = s²', ket: 's = panjang sisi' },
+        { label: '📏 Keliling', formula: 'K = 4 × s',      ket: 's = panjang sisi' }
+      ],
+      contoh: ['Ubin lantai', 'Kertas origami', 'Papan catur', 'Stiker label', 'Layar TV lama'],
+      fakta : [
+        'Persegi adalah persegi panjang istimewa di mana semua sisinya sama!',
+        'Diagonal persegi saling berpotongan tegak lurus dan sama panjang.',
+        'Luas persegi selalu lebih besar daripada kelilingnya jika s &gt; 4.'
+      ],
+      fields: [
+        { id: 'sisi', label: 'Sisi (s)', placeholder: 'Contoh: 5' }
+      ],
+      hitungLuas    : function(v) { return v['sisi'] * v['sisi']; },
+      hitungKeliling: function(v) { return 4 * v['sisi']; },
+      satuanLuas: 'cm²', satuanKel: 'cm',
+      soal: [
+        {
+          q      : 'Sebuah ubin berbentuk persegi memiliki panjang sisi 7 cm. Berapakah luas ubin tersebut?',
+          opts   : ['28 cm²', '49 cm²', '42 cm²', '56 cm²'],
+          jawaban: 1,
+          bahas  : 'L = s × s = 7 × 7 = 49 cm²'
+        },
+        {
+          q      : 'Taman berbentuk persegi memiliki keliling 36 m. Berapakah panjang sisi taman tersebut?',
+          opts   : ['6 m', '7 m', '8 m', '9 m'],
+          jawaban: 3,
+          bahas  : 'K = 4 × s → 36 = 4 × s → s = 36 ÷ 4 = 9 m'
+        },
+        {
+          q      : 'Kertas origami berbentuk persegi dengan sisi 15 cm. Berapakah kelilingnya?',
+          opts   : ['45 cm', '60 cm', '75 cm', '90 cm'],
+          jawaban: 1,
+          bahas  : 'K = 4 × s = 4 × 15 = 60 cm'
+        },
+        {
+          q      : 'Luas sebuah persegi adalah 64 cm². Berapakah panjang sisinya?',
+          opts   : ['6 cm', '7 cm', '8 cm', '9 cm'],
+          jawaban: 2,
+          bahas  : 'L = s² → 64 = s² → s = √64 = 8 cm'
+        },
+        {
+          q      : 'Papan catur berbentuk persegi dengan sisi 40 cm. Berapakah luasnya?',
+          opts   : ['1.200 cm²', '1.400 cm²', '1.600 cm²', '1.800 cm²'],
+          jawaban: 2,
+          bahas  : 'L = s × s = 40 × 40 = 1.600 cm²'
+        }
+      ]
+    },
+
+    persegipanjang: {
+      icon  : '🔷',
+      warna : 'oranye-bg',
+      judul : 'Persegi Panjang',
+      sub   : 'Bangun datar dengan dua pasang sisi sejajar yang sama panjang',
+      warnaClass: 'oranye',
+      warnaCSS  : 'var(--oranye)',
+      svg   : '<svg width="140" height="100" viewBox="0 0 140 100" xmlns="http://www.w3.org/2000/svg">'
+            + '<rect x="10" y="15" width="120" height="70" rx="6" fill="#E67E22" opacity="0.15" stroke="#E67E22" stroke-width="3"/>'
+            + '<text x="70" y="52" text-anchor="middle" font-size="12" fill="#c05c10" font-weight="bold" font-family="Nunito,sans-serif">p × l</text>'
+            + '<text x="70" y="8" text-anchor="middle" font-size="10" fill="#E67E22" font-family="Nunito,sans-serif">p = panjang</text>'
+            + '<text x="132" y="50" text-anchor="middle" font-size="10" fill="#E67E22" font-family="Nunito,sans-serif" transform="rotate(90,132,50)">l = lebar</text>'
+            + '</svg>',
+      rumus : [
+        { label: '📐 Luas',     formula: 'L = p × l',        ket: 'p = panjang, l = lebar' },
+        { label: '📏 Keliling', formula: 'K = 2 × (p + l)',  ket: 'p = panjang, l = lebar' }
+      ],
+      contoh: ['Buku tulis', 'Pintu rumah', 'Lapangan sepak bola', 'Layar HP', 'Meja belajar', 'Papan tulis'],
+      fakta : [
+        'Persegi panjang adalah bangun datar dengan 4 sudut siku-siku (90°).',
+        'Diagonalnya sama panjang dan saling membagi dua sama besar.',
+        'Semua persegi adalah persegi panjang, tetapi tidak sebaliknya.'
+      ],
+      fields: [
+        { id: 'panjang', label: 'Panjang (p)', placeholder: 'Contoh: 8' },
+        { id: 'lebar',   label: 'Lebar (l)',   placeholder: 'Contoh: 5' }
+      ],
+      hitungLuas    : function(v) { return v['panjang'] * v['lebar']; },
+      hitungKeliling: function(v) { return 2 * (Number(v['panjang']) + Number(v['lebar'])); },
+      satuanLuas: 'cm²', satuanKel: 'cm',
+      soal: [
+        {
+          q      : 'Sebuah buku memiliki panjang 25 cm dan lebar 18 cm. Berapakah luas sampul buku tersebut?',
+          opts   : ['400 cm²', '430 cm²', '450 cm²', '460 cm²'],
+          jawaban: 2,
+          bahas  : 'L = p × l = 25 × 18 = 450 cm²'
+        },
+        {
+          q      : 'Lapangan berbentuk persegi panjang dengan panjang 30 m dan lebar 20 m. Berapakah kelilingnya?',
+          opts   : ['80 m', '90 m', '100 m', '110 m'],
+          jawaban: 2,
+          bahas  : 'K = 2 × (p + l) = 2 × (30 + 20) = 2 × 50 = 100 m'
+        },
+        {
+          q      : 'Meja belajar berbentuk persegi panjang dengan panjang 120 cm dan lebar 60 cm. Berapakah luasnya?',
+          opts   : ['6.800 cm²', '7.200 cm²', '7.400 cm²', '8.000 cm²'],
+          jawaban: 1,
+          bahas  : 'L = p × l = 120 × 60 = 7.200 cm²'
+        },
+        {
+          q      : 'Keliling persegi panjang adalah 48 cm. Jika panjangnya 14 cm, berapakah lebarnya?',
+          opts   : ['8 cm', '10 cm', '12 cm', '14 cm'],
+          jawaban: 1,
+          bahas  : 'K = 2(p+l) → 48 = 2(14+l) → 24 = 14+l → l = 10 cm'
+        },
+        {
+          q      : 'Pintu rumah berbentuk persegi panjang dengan panjang 200 cm dan lebar 80 cm. Berapakah luasnya dalam m²?',
+          opts   : ['1,2 m²', '1,4 m²', '1,6 m²', '2,0 m²'],
+          jawaban: 2,
+          bahas  : 'L = 200 × 80 = 16.000 cm² = 1,6 m²'
+        }
+      ]
+    },
+
+    segitiga: {
+      icon  : '🔺',
+      warna : 'ungu-bg',
+      judul : 'Segitiga',
+      sub   : 'Bangun datar dengan tiga sisi dan tiga sudut',
+      warnaClass: 'ungu',
+      warnaCSS  : 'var(--ungu)',
+      svg   : '<svg width="130" height="120" viewBox="0 0 130 120" xmlns="http://www.w3.org/2000/svg">'
+            + '<polygon points="65,10 115,100 15,100" fill="#9B59B6" opacity="0.15" stroke="#9B59B6" stroke-width="3"/>'
+            + '<text x="65" y="70" text-anchor="middle" font-size="11" fill="#6c3483" font-weight="bold" font-family="Nunito,sans-serif">½ × a × t</text>'
+            + '<line x1="65" y1="10" x2="65" y2="100" stroke="#9B59B6" stroke-width="1.5" stroke-dasharray="4,3"/>'
+            + '<text x="73" y="60" font-size="10" fill="#9B59B6" font-family="Nunito,sans-serif">t</text>'
+            + '<text x="65" y="115" text-anchor="middle" font-size="10" fill="#9B59B6" font-family="Nunito,sans-serif">a = alas</text>'
+            + '</svg>',
+      rumus : [
+        { label: '📐 Luas',     formula: 'L = ½ × a × t', ket: 'a = alas, t = tinggi' },
+        { label: '📏 Keliling', formula: 'K = a + b + c',  ket: 'a, b, c = ketiga sisi segitiga' }
+      ],
+      contoh: ['Atap rumah', 'Penggaris segitiga', 'Rambu jalan', 'Layangan', 'Kepingan pizza', 'Sail kapal'],
+      fakta : [
+        'Jumlah ketiga sudut segitiga selalu 180°.',
+        'Segitiga adalah bangun datar paling sederhana dengan jumlah sisi terkecil.',
+        'Segitiga sama sisi memiliki semua sisi dan sudut yang sama besar (60° tiap sudut).'
+      ],
+      fields: [
+        { id: 'alas',   label: 'Alas (a)',   placeholder: 'Contoh: 6' },
+        { id: 'tinggi', label: 'Tinggi (t)', placeholder: 'Contoh: 8' },
+        { id: 'sisi_b', label: 'Sisi b',     placeholder: 'Contoh: 7' },
+        { id: 'sisi_c', label: 'Sisi c',     placeholder: 'Contoh: 9' }
+      ],
+      hitungLuas    : function(v) { return 0.5 * v['alas'] * v['tinggi']; },
+      hitungKeliling: function(v) { return Number(v['alas']) + Number(v['sisi_b']) + Number(v['sisi_c']); },
+      satuanLuas: 'cm²', satuanKel: 'cm',
+      soal: [
+        {
+          q      : 'Sebuah segitiga memiliki alas 10 cm dan tinggi 8 cm. Berapakah luasnya?',
+          opts   : ['30 cm²', '35 cm²', '40 cm²', '45 cm²'],
+          jawaban: 2,
+          bahas  : 'L = ½ × a × t = ½ × 10 × 8 = 40 cm²'
+        },
+        {
+          q      : 'Segitiga memiliki tiga sisi: 6 cm, 8 cm, dan 10 cm. Berapakah kelilingnya?',
+          opts   : ['20 cm', '22 cm', '24 cm', '26 cm'],
+          jawaban: 2,
+          bahas  : 'K = a + b + c = 6 + 8 + 10 = 24 cm'
+        },
+        {
+          q      : 'Atap rumah berbentuk segitiga dengan alas 6 m dan tinggi 4 m. Berapakah luasnya?',
+          opts   : ['10 m²', '12 m²', '14 m²', '16 m²'],
+          jawaban: 1,
+          bahas  : 'L = ½ × 6 × 4 = ½ × 24 = 12 m²'
+        },
+        {
+          q      : 'Segitiga sama sisi dengan panjang sisi 9 cm. Berapakah kelilingnya?',
+          opts   : ['18 cm', '21 cm', '24 cm', '27 cm'],
+          jawaban: 3,
+          bahas  : 'K = 3 × s = 3 × 9 = 27 cm (segitiga sama sisi: semua sisi sama panjang)'
+        },
+        {
+          q      : 'Luas segitiga adalah 30 cm². Jika alasnya 12 cm, berapakah tingginya?',
+          opts   : ['3 cm', '4 cm', '5 cm', '6 cm'],
+          jawaban: 2,
+          bahas  : 'L = ½ × a × t → 30 = ½ × 12 × t → 30 = 6t → t = 5 cm'
+        }
+      ]
+    }
+  };
+
+  /* ======================================================
+     FUNGSI NAVIGASI HALAMAN
+  ====================================================== */
+  function showPage(pageId) {
+    var pages = document.querySelectorAll('.page');
+    for (var i = 0; i < pages.length; i++) {
+      pages[i].classList.remove('active');
+      pages[i].style.display = 'none';
+    }
+    var target = document.getElementById(pageId);
+    target.style.display = 'block';
+    target.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  /* ======================================================
+     LOGIN
+  ====================================================== */
+  function handleLogin() {
+    var input = document.getElementById('nama-input');
+    var nama  = input.value.trim();
+    if (!nama) {
+      document.getElementById('login-error').style.display = 'block';
+      return;
+    }
+    document.getElementById('login-error').style.display = 'none';
+    userName = nama;
+
+    document.getElementById('hero-nama').textContent       = nama;
+    document.getElementById('nav-user-name').textContent   = '👤 ' + nama;
+    document.getElementById('nav-user-name2').textContent  = '👤 ' + nama;
+    document.getElementById('nav-user-name3').textContent  = '👤 ' + nama;
+
+    showPage('beranda');
+  }
+
+  /* ======================================================
+     HALAMAN MATERI
+  ====================================================== */
+  function showMateri(topik) {
+    currentTopik = topik;
+    var d = materiData[topik];
+
+    /* Header hero */
+    var hero = document.getElementById('materi-hero');
+    hero.className = 'materi-hero ' + d.warna;
+    document.getElementById('materi-icon').textContent  = d.icon;
+    document.getElementById('materi-judul').textContent = d.judul;
+    document.getElementById('materi-sub').textContent   = d.sub;
+
+    /* Buat konten */
+    var html = '';
+
+    /* 1. Ilustrasi visual */
+    html += '<div class="materi-card">';
+    html += '<h3 style="color:' + d.warnaCSS + '">🖼️ Ilustrasi Visual</h3>';
+    html += '<div style="text-align:center; padding:0.5rem 0">' + d.svg + '</div>';
+    html += '</div>';
+
+    /* 2. Rumus */
+    html += '<div class="materi-card">';
+    html += '<h3 style="color:' + d.warnaCSS + '">📝 Rumus</h3>';
+    for (var r = 0; r < d.rumus.length; r++) {
+      var rumus = d.rumus[r];
+      html += '<div class="formula-box ' + d.warnaClass + '">';
+      html += '<div style="font-weight:700; margin-bottom:0.3rem">' + rumus.label + '</div>';
+      html += '<div style="font-size:1.15rem; font-weight:800">' + rumus.formula + '</div>';
+      html += '<div style="font-size:0.85rem; color:#666; margin-top:0.3rem">' + rumus.ket + '</div>';
+      html += '</div>';
+    }
+    html += '</div>';
+
+    /* 3. Contoh kehidupan sehari-hari */
+    html += '<div class="materi-card">';
+    html += '<h3 style="color:' + d.warnaCSS + '">🏠 Contoh dalam Kehidupan Sehari-hari</h3>';
+    html += '<p style="font-size:0.9rem; color:#555; margin-bottom:0.8rem">Benda-benda di sekitar kita yang berbentuk ' + d.judul + ':</p>';
+    html += '<div class="contoh-benda">';
+    for (var c = 0; c < d.contoh.length; c++) {
+      html += '<span class="benda-tag">🔹 ' + d.contoh[c] + '</span>';
+    }
+    html += '</div></div>';
+
+    /* 4. Fakta menarik */
+    html += '<div class="materi-card">';
+    html += '<h3 style="color:var(--kuning-tua)">💡 Fakta Menarik &amp; Catatan Penting</h3>';
+    html += '<div class="fakta-box">';
+    for (var f = 0; f < d.fakta.length; f++) {
+      html += '<div class="fakta-item"><span>⭐</span><span>' + d.fakta[f] + '</span></div>';
+    }
+    html += '</div></div>';
+
+    /* 5. Kalkulator interaktif */
+    html += '<div class="materi-card">';
+    html += '<h3 style="color:var(--hijau-tua)">🧮 Kalkulator Interaktif</h3>';
+    html += '<p style="font-size:0.9rem; color:#555; margin-bottom:1rem">Masukkan ukuran, hasil akan langsung terhitung otomatis!</p>';
+    for (var fi = 0; fi < d.fields.length; fi++) {
+      var field = d.fields[fi];
+      html += '<div class="kalk-input-group">';
+      html += '<label>' + field.label + ' (cm)</label>';
+      html += '<input class="kalk-input" type="number" id="kalk-' + field.id + '" placeholder="' + field.placeholder + '" min="0" oninput="hitungOtomatis()">';
+      html += '</div>';
+    }
+    html += '<div class="kalk-hasil">';
+    html += '<div class="hasil-box luas">';
+    html += '<div class="hasil-label">LUAS</div>';
+    html += '<div class="hasil-nilai" id="hasil-luas">—</div>';
+    html += '<div class="hasil-satuan">' + d.satuanLuas + '</div>';
+    html += '</div>';
+    html += '<div class="hasil-box keliling">';
+    html += '<div class="hasil-label">KELILING</div>';
+    html += '<div class="hasil-nilai" id="hasil-keliling">—</div>';
+    html += '<div class="hasil-satuan">' + d.satuanKel + '</div>';
+    html += '</div>';
+    html += '</div></div>';
+
+    /* Tombol navigasi bawah */
+    html += '<div class="nav-actions">';
+    html += '<button class="btn-action kembali" onclick="showPage(\'beranda\')">← Pilih Topik Lain</button>';
+    html += '<button class="btn-action quiz" onclick="mulaiQuiz()">📝 Latihan Soal</button>';
+    html += '</div>';
+
+    document.getElementById('materi-body').innerHTML = html;
+    showPage('materi');
+  }
+
+  /* ======================================================
+     KALKULATOR OTOMATIS
+  ====================================================== */
+  function hitungOtomatis() {
+    var d      = materiData[currentTopik];
+    var vals   = {};
+    var allOk  = true;
+
+    for (var i = 0; i < d.fields.length; i++) {
+      var fid = d.fields[i].id;
+      var el  = document.getElementById('kalk-' + fid);
+      if (!el || el.value === '' || Number(el.value) <= 0) {
+        allOk = false;
+      } else {
+        vals[fid] = Number(el.value);
+      }
+    }
+
+    if (allOk) {
+      var luas = d.hitungLuas(vals);
+      var kel  = d.hitungKeliling(vals);
+      document.getElementById('hasil-luas').textContent     = Number.isInteger(luas) ? luas : luas.toFixed(2);
+      document.getElementById('hasil-keliling').textContent = Number.isInteger(kel)  ? kel  : kel.toFixed(2);
+    } else {
+      document.getElementById('hasil-luas').textContent     = '—';
+      document.getElementById('hasil-keliling').textContent = '—';
+    }
+  }
+
+  /* ======================================================
+     QUIZ
+  ====================================================== */
+  function mulaiQuiz() {
+    currentSoal = 0;
+    skorQuiz    = 0;
+
+    document.getElementById('quiz-topik-title').textContent = 'Latihan Soal — ' + materiData[currentTopik].judul;
+    document.getElementById('quiz-skor-container').style.display  = 'none';
+    document.getElementById('quiz-soal-container').style.display  = 'block';
+
+    tampilkanSoal();
+    showPage('quiz');
+  }
+
+  function tampilkanSoal() {
+    var d     = materiData[currentTopik];
+    var soal  = d.soal[currentSoal];
+    var total = d.soal.length;
+    var pct   = Math.round(((currentSoal + 1) / total) * 100);
+
+    document.getElementById('quiz-progress-text').textContent = 'Soal ' + (currentSoal + 1) + ' dari ' + total;
+    document.getElementById('quiz-bar').style.width = pct + '%';
+
+    sudahJawab = false;
+
+    var html = '';
+    html += '<div class="soal-card">';
+    html += '<div class="soal-nomor">Soal ' + (currentSoal + 1) + ' dari ' + total + '</div>';
+    html += '<div class="soal-text">' + soal.q + '</div>';
+    html += '<div id="pilihan-container">';
+    for (var i = 0; i < soal.opts.length; i++) {
+      var huruf = String.fromCharCode(65 + i);
+      html += '<button class="pilihan-btn" id="opt-' + i + '" onclick="jawab(' + i + ')">';
+      html += huruf + '. ' + soal.opts[i];
+      html += '</button>';
+    }
+    html += '</div>';
+    html += '<div id="pembahasan-container"></div>';
+    html += '</div>';
+
+    /* Tombol lanjut (awalnya tersembunyi) */
+    var labelNext = (currentSoal < total - 1) ? 'Soal Berikutnya →' : 'Lihat Hasil 🏆';
+    html += '<div id="next-btn-container" style="padding:0 0 1rem; display:none;">';
+    html += '<button class="btn-next-soal" onclick="soalBerikutnya()">' + labelNext + '</button>';
+    html += '</div>';
+
+    document.getElementById('quiz-soal-container').innerHTML = html;
+  }
+
+  function jawab(idx) {
+    if (sudahJawab) return;
+    sudahJawab = true;
+
+    var soal  = materiData[currentTopik].soal[currentSoal];
+    var benar = (soal.jawaban === idx);
+    if (benar) skorQuiz++;
+
+    /* Beri warna pada pilihan */
+    var btns = document.querySelectorAll('.pilihan-btn');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].classList.add('disabled');
+      if (i === soal.jawaban) btns[i].classList.add('benar');
+      if (i === idx && !benar) btns[i].classList.add('salah');
+    }
+
+    /* Pembahasan */
+    var pem = document.getElementById('pembahasan-container');
+    pem.innerHTML =
+      '<div class="pembahasan">' +
+      '<strong>' + (benar ? '✅ Benar!' : '❌ Salah!') + '</strong><br>' +
+      '<strong>Pembahasan:</strong> ' + soal.bahas +
+      '</div>';
+
+    document.getElementById('next-btn-container').style.display = 'block';
+  }
+
+  function soalBerikutnya() {
+    var total = materiData[currentTopik].soal.length;
+    if (currentSoal < total - 1) {
+      currentSoal++;
+      tampilkanSoal();
+    } else {
+      tampilkanSkor();
+    }
+  }
+
+  function tampilkanSkor() {
+    var total  = materiData[currentTopik].soal.length;
+    var persen = Math.round((skorQuiz / total) * 100);
+
+    document.getElementById('quiz-soal-container').style.display = 'none';
+    document.getElementById('quiz-skor-container').style.display = 'block';
+
+    var emoji = '😊', cls = 'cukup';
+    if (persen >= 80)      { emoji = '🏆'; cls = 'bagus'; }
+    else if (persen < 60)  { emoji = '💪'; cls = 'kurang'; }
+
+    document.getElementById('skor-emoji').textContent        = emoji;
+    document.getElementById('skor-angka').textContent        = persen + '%';
+    document.getElementById('skor-angka').className          = 'skor-angka ' + cls;
+    document.getElementById('skor-detail').textContent       = skorQuiz + ' dari ' + total + ' jawaban benar';
+    document.getElementById('quiz-bar').style.width          = '100%';
+    document.getElementById('quiz-progress-text').textContent = 'Selesai!';
+
+    if (persen >= 60) {
+      document.getElementById('selamat-banner').style.display = 'block';
+    } else {
+      document.getElementById('selamat-banner').style.display = 'none';
+    }
+
+    /* Tombol lanjut topik */
+    var idx     = topikOrder.indexOf(currentTopik);
+    var btn     = document.getElementById('btn-lanjut-topik');
+    if (idx < topikOrder.length - 1) {
+      var nextTopik = topikOrder[idx + 1];
+      btn.textContent = 'Topik Selanjutnya: ' + materiData[nextTopik].judul + ' →';
+      btn.onclick = function() { lanjutTopik(); };
+    } else {
+      btn.textContent = '🎓 Semua Topik Selesai!';
+      btn.onclick = function() { showPage('beranda'); };
+    }
+  }
+
+  function lanjutTopik() {
+    var idx = topikOrder.indexOf(currentTopik);
+    if (idx < topikOrder.length - 1) {
+      showMateri(topikOrder[idx + 1]);
+    } else {
+      showPage('beranda');
+    }
+  }
+
+  /* ======================================================
+     EVENT LISTENER
+  ====================================================== */
+  document.getElementById('nama-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') handleLogin();
+  });
+</script>
+</body>
+</html>
